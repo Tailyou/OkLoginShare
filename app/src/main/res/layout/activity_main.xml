@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.hengda.sharelogin.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="第三方登录" />
+
+    <Button
+        android:id="@+id/btnSinaLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="微博登录" />
+
+    <Button
+        android:id="@+id/btnQQLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="QQ登录" />
+
+    <Button
+        android:id="@+id/btnWeChatLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="微信登录" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="第三方分享" />
+
+    <RadioGroup
+        android:id="@+id/rgShareContentType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="文本" />
+
+        <RadioButton
+            android:id="@+id/rbPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:text="图片" />
+
+        <RadioButton
+            android:id="@+id/rbWebPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网页（图文）" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btnSina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-微博" />
+
+    <Button
+        android:id="@+id/btnQQFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-QQ好友" />
+
+    <Button
+        android:id="@+id/btnQQZone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-QQ空间" />
+
+    <Button
+        android:id="@+id/btnWxFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-微信好友" />
+
+    <Button
+        android:id="@+id/btnWxFriendZone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-微信朋友圈" />
+
+    <Button
+        android:id="@+id/btnWxFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="doShareLogin"
+        android:text="分享-微信收藏" />
+
+</LinearLayout>
