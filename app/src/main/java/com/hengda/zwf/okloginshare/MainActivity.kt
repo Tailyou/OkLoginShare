@@ -7,9 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.hengda.zwf.commonutil.SDCardUtil
-import com.hengda.zwf.sharelogin.ILoginListener
-import com.hengda.zwf.sharelogin.IShareListener
-import com.hengda.zwf.sharelogin.ShareLoginClient
+import com.hengda.zwf.sharelogin.*
 import com.hengda.zwf.sharelogin.content.ShareContent
 import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentPicture
@@ -88,6 +86,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     private fun doLogin(platform: String) {
         ShareLoginClient.login(mActivity, platform, object : ILoginListener {
             override fun onSuccess(accessToken: String, uId: String, expiresIn: Long) {
+                loadUserInfo(platform, accessToken, uId)
                 toast("$accessToken,$uId")
             }
 
@@ -97,6 +96,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
             override fun onCancel() {
                 toast("login cancel")
+            }
+        })
+    }
+
+    private fun loadUserInfo(platform: String, accessToken: String, uId: String) {
+        AuthUserInfoClient.getUserInfo(mActivity, platform, accessToken, uId, object : AuthUserInfoClient.UserInfoListener {
+            override fun onSuccess(userInfo: AuthUserInfo) {
+                toast(userInfo.toString())
+            }
+
+            override fun onError(msg: String) {
+                toast(msg)
             }
         })
     }
