@@ -59,9 +59,6 @@ object BitmapUtil {
      * @time 2017/6/6 19:19
      */
     fun bitmap2ByteArray(src: Bitmap): ByteArray? {
-        if (src == null) {
-            return null
-        }
         val bitmap: Bitmap
         if (src.width > 250 || src.height > 250) {
             bitmap = ThumbnailUtils.extractThumbnail(src, 250, 250)

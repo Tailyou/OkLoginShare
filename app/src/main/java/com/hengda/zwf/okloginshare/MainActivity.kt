@@ -17,8 +17,10 @@ import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.LoginPlatform
 import com.hengda.zwf.sharelogin.type.SharePlatform
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AnkoLogger {
 
     lateinit var mBitmap: Bitmap
     lateinit var mLargeBmpPath: String
@@ -70,12 +72,15 @@ class MainActivity : AppCompatActivity() {
     private fun doShare(platform: String) {
         ShareLoginClient.share(mActivity, platform, mShareContent, object : IShareListener {
             override fun onSuccess() {
+                toast("share success")
             }
 
             override fun onCancel() {
+                toast("share cancel")
             }
 
             override fun onError(msg: String) {
+                toast("share error")
             }
         })
     }
@@ -83,12 +88,15 @@ class MainActivity : AppCompatActivity() {
     private fun doLogin(platform: String) {
         ShareLoginClient.login(mActivity, platform, object : ILoginListener {
             override fun onSuccess(accessToken: String, uId: String, expiresIn: Long) {
+                toast("$accessToken,$uId")
             }
 
             override fun onError(errorMsg: String) {
+                toast("login error:$errorMsg")
             }
 
             override fun onCancel() {
+                toast("login cancel")
             }
         })
     }

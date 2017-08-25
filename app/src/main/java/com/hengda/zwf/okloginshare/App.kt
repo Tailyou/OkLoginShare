@@ -1,6 +1,6 @@
 package com.hengda.zwf.okloginshare
 
-import android.app.Application
+import android.support.multidex.MultiDexApplication
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 
@@ -10,7 +10,7 @@ import com.hengda.zwf.sharelogin.ShareLoginConfig
  * 时间：2017/6/6 18:53
  * 描述：
  */
-class App : Application() {
+class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -19,9 +19,7 @@ class App : Application() {
 
     /**
      * 初始化 ShareLoginClient
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 13:40
      */
     private fun initShareLoginClient() {
