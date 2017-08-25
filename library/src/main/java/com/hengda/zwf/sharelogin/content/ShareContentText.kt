@@ -6,9 +6,7 @@ import com.hengda.zwf.sharelogin.type.ContentType
 
 /**
  * 分享类型-文本
-
  * @author 祝文飞（Tailyou）
- * *
  * @time 2017/6/6 16:29
  */
 class ShareContentText(override val text: String) : ShareContent {

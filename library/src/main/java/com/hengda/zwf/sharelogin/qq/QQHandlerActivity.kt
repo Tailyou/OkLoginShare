@@ -41,11 +41,8 @@ class QQHandlerActivity : Activity() {
 
     /**
      * 登录
-
      * @param loginListener
-     * *
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 13:46
      */
     private fun doLogin(loginListener: ILoginListener) {
@@ -60,7 +57,6 @@ class QQHandlerActivity : Activity() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
             }
 
             override fun onError(uiError: UiError) {
@@ -81,9 +77,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * 分享
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 14:57
      */
     private fun doShare(sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener) {
@@ -124,9 +118,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ好友-文本
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/7 17:06
      */
     fun shareQQText(text: String) {
@@ -141,9 +133,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ好友-图片
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 15:26
      */
     private fun setupQQImageBundle(shareContent: ShareContent): Bundle {
@@ -161,9 +151,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ好友-网页（图文）
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 15:30
      */
     private fun setupQQPageBundle(shareContent: ShareContent): Bundle {
@@ -179,9 +167,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ空间-说说-文本
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/8 8:21
      */
     private fun setupQzoneTextBundle(shareContent: ShareContent): Bundle {
@@ -194,9 +180,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ空间-说说-图片
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/8 8:21
      */
     private fun setupQzoneImageBundle(shareContent: ShareContent): Bundle {
@@ -210,9 +194,7 @@ class QQHandlerActivity : Activity() {
 
     /**
      * QQ空间分享-网页（图文）
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/7 12:12
      */
     private fun setupQzonePageBundle(shareContent: ShareContent): Bundle {

@@ -20,9 +20,7 @@ object BitmapUtil {
 
     /**
      * 保存Bitmap到SD卡
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 18:25
      */
     fun saveBitmap(bitmap: Bitmap, dirPath: String, imgName: String): String {
@@ -41,9 +39,7 @@ object BitmapUtil {
 
     /**
      * 创建目录
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 18:23
      */
     fun makeDir(dirPath: String) {
@@ -59,9 +55,7 @@ object BitmapUtil {
 
     /**
      * Bitmap 转 byte[]
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 19:19
      */
     fun bitmap2ByteArray(src: Bitmap): ByteArray? {

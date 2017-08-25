@@ -6,27 +6,25 @@ import com.hengda.zwf.sharelogin.type.ContentType
 
 /**
  * 分享类型-图片
-
  * @author 祝文飞（Tailyou）
- * *
  * @time 2017/6/6 16:29
  */
 class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
 
     override val type: Int
-    get() = ContentType.PIC
+        get() = ContentType.PIC
 
     override val title: String?
-    get() = null
+        get() = null
 
     override val text: String?
-    get() = null
+        get() = null
 
     override val url: String?
-    get() = null
+        get() = null
 
     override val thumbBmpBytes: ByteArray?
-    get() = null
+        get() = null
 
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<ShareContentPicture> = object : Parcelable.Creator<ShareContentPicture> {
@@ -36,7 +34,7 @@ class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
     }
 
     constructor(source: Parcel) : this(
-    source.readString()
+            source.readString()
     )
 
     override fun describeContents() = 0

@@ -53,43 +53,35 @@ object ShareLoginClient {
 
     /**
      * 根据包名判断是否安装
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 11:09
      */
     private fun isInstalled(context: Context, pkgName: String): Boolean {
         val pm = context.applicationContext.packageManager ?: return false
         val packages = pm.getInstalledPackages(0)
-        return packages
-                .map { it.packageName.toLowerCase(Locale.ENGLISH) }
+        return packages.map { it.packageName.toLowerCase(Locale.ENGLISH) }
                 .contains(pkgName)
     }
 
     /**
      * 第三方登录
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 13:52
      */
     fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener?) {
         ShareLoginClient.sLoginListener = loginListener
         when (type) {
-            WEIBO//微博
-            -> if (isWeiBoInstalled(activity)) {
+            WEIBO -> if (isWeiBoInstalled(activity)) {
                 toLogin(activity, SinaHandlerActivity::class.java)
             } else {
                 loginListener?.onError("未安装微博")
             }
-            QQ//腾讯QQ
-            -> if (isQQInstalled(activity)) {
+            QQ -> if (isQQInstalled(activity)) {
                 toLogin(activity, QQHandlerActivity::class.java)
             } else {
                 loginListener?.onError("未安装QQ")
             }
-            WEIXIN//微信
-            -> if (isWeiXinInstalled(activity)) {
+            WEIXIN -> if (isWeiXinInstalled(activity)) {
                 WechatHandlerActivity.doLogin(activity)
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             } else {
@@ -100,9 +92,7 @@ object ShareLoginClient {
 
     /**
      * 跳转->第三方登录
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/7 9:50
      */
     private fun toLogin(activity: Activity, cls: Class<out Activity>) {
@@ -114,27 +104,22 @@ object ShareLoginClient {
 
     /**
      * 第三方分享
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/7 9:51
      */
     fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener?) {
         ShareLoginClient.sShareListener = shareListener
         when (sharePlatform) {
-        //微博
             WEIBO_TIME_LINE -> if (isWeiBoInstalled(activity)) {
                 toShare(activity, sharePlatform, shareContent, SinaHandlerActivity::class.java)
             } else {
                 shareListener?.onError("未安装微博")
             }
-        //QQ
             QQ_FRIEND, QQ_ZONE -> if (isQQInstalled(activity)) {
                 toShare(activity, sharePlatform, shareContent, QQHandlerActivity::class.java)
             } else {
                 shareListener?.onError("未安装QQ")
             }
-        //微信
             WEIXIN_FRIEND, WEIXIN_FRIEND_ZONE, WEIXIN_FAVORITE -> if (isWeiXinInstalled(activity)) {
                 WechatHandlerActivity().doShare(activity, shareContent, sharePlatform)
             } else {
@@ -145,9 +130,7 @@ object ShareLoginClient {
 
     /**
      * 跳转->第三方分享
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/7 9:57
      */
     private fun toShare(activity: Activity, sharePlatform: String, shareContent: ShareContent, cls: Class<out Activity>) {

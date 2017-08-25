@@ -23,17 +23,17 @@ interface ShareContent : Parcelable {
     val text: String?
 
     /**
-     * 获取跳转的链接
+     * 链接
      */
     val url: String?
 
     /**
-     * 分享的缩略图片
+     * 缩略图
      */
     val thumbBmpBytes: ByteArray?
 
     /**
-     * 分享大图路径
+     * 大图
      */
     val largeBmpPath: String?
 

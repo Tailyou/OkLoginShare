@@ -44,11 +44,8 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     /**
      * 登录
-
      * @param loginListener
-     * *
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 13:46
      */
     private fun doLogin(loginListener: ILoginListener) {
@@ -56,8 +53,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
         mSsoHandler!!.authorizeClientSso(object : WbAuthListener {
             override fun onSuccess(oauth2AccessToken: Oauth2AccessToken) {
                 if (oauth2AccessToken.isSessionValid) {
-                    loginListener.onSuccess(oauth2AccessToken.token, oauth2AccessToken.uid,
-                            oauth2AccessToken.expiresTime / 1000000)
+                    loginListener.onSuccess(oauth2AccessToken.token, oauth2AccessToken.uid, oauth2AccessToken.expiresTime / 1000000)
                 } else {
                     loginListener.onError("登录失败")
                 }
@@ -75,9 +71,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     /**
      * 分享
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 14:57
      */
     private fun doShare(shareContent: ShareContent) {
@@ -94,9 +88,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     /**
      * 创建文本消息对象
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 15:01
      */
     private fun getTextObj(shareContent: ShareContent): TextObject {
@@ -107,9 +99,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     /**
      * 创建图片消息对象
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 15:26
      */
     private fun getImageObj(shareContent: ShareContent): ImageObject {
@@ -120,9 +110,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     /**
      * 创建多媒体（网页）消息对象。
-
      * @author 祝文飞（Tailyou）
-     * *
      * @time 2017/6/6 15:30
      */
     private fun getWebpageObj(shareContent: ShareContent): WebpageObject {
