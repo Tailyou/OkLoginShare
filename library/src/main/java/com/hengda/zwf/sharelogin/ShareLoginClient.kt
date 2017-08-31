@@ -14,13 +14,6 @@ import com.hengda.zwf.sharelogin.wechat.WechatHandlerActivity
 import java.util.*
 import com.sina.weibo.sdk.utils.LogUtil
 
-
-/**
- * 作者：祝文飞（Tailyou）
- * 邮箱：tailyou@163.com
- * 时间：2017/6/6 11:02
- * 描述：
- */
 object ShareLoginClient {
 
     const val SHARE_CONTENT = "SHARE_CONTENT"
@@ -53,7 +46,6 @@ object ShareLoginClient {
 
     /**
      * 根据包名判断是否安装
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/6 11:09
      */
     private fun isInstalled(context: Context, pkgName: String): Boolean {
@@ -65,7 +57,6 @@ object ShareLoginClient {
 
     /**
      * 第三方登录
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/6 13:52
      */
     fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener?) {
@@ -92,7 +83,6 @@ object ShareLoginClient {
 
     /**
      * 跳转->第三方登录
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 9:50
      */
     private fun toLogin(activity: Activity, cls: Class<out Activity>) {
@@ -104,7 +94,6 @@ object ShareLoginClient {
 
     /**
      * 第三方分享
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 9:51
      */
     fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener?) {
@@ -130,7 +119,6 @@ object ShareLoginClient {
 
     /**
      * 跳转->第三方分享
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 9:57
      */
     private fun toShare(activity: Activity, sharePlatform: String, shareContent: ShareContent, cls: Class<out Activity>) {

@@ -58,7 +58,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 分享
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/6 14:57
      */
     fun doShare(context: Context, shareContent: ShareContent, @SharePlatform shareType: String) {
@@ -70,7 +69,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 解析分享响应
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 14:55
      */
     private fun parseShareResp(resp: BaseResp, listener: IShareListener) {
@@ -86,7 +84,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 组装分享请求
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 15:23
      */
     private fun setupShareRequest(shareContent: ShareContent, @SharePlatform shareType: String): SendMessageToWX.Req {
@@ -103,7 +100,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 组装分享内容
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 15:23
      */
     private fun setupMessage(shareContent: ShareContent): WXMediaMessage {
@@ -150,7 +146,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
     companion object {
         /**
          * 登录
-         * @author 祝文飞（Tailyou）
          * @time 2017/6/6 13:46
          */
         fun doLogin(context: Context) {
@@ -165,7 +160,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 解析登录响应
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 14:51
      */
     private fun parseLoginResp(activity: Activity, resp: SendAuth.Resp, listener: ILoginListener) {
@@ -185,7 +179,6 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     /**
      * 根据登录成功后的code获取token
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/7 14:50
      */
     private fun getAccessTokenByCode(context: Context, code: String, listener: ILoginListener) {

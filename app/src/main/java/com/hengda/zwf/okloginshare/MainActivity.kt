@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
+    //分享
     private fun doShare(platform: String) {
         ShareLoginClient.share(mActivity, platform, mShareContent, object : IShareListener {
             override fun onSuccess() {
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         })
     }
 
+    //登录
     private fun doLogin(platform: String) {
         ShareLoginClient.login(mActivity, platform, object : ILoginListener {
             override fun onSuccess(accessToken: String, uId: String, expiresIn: Long) {
@@ -100,6 +102,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         })
     }
 
+    //获取三方账号信息
     private fun loadUserInfo(platform: String, accessToken: String, uId: String) {
         AuthUserInfoClient.getUserInfo(mActivity, platform, accessToken, uId, object : AuthUserInfoClient.UserInfoListener {
             override fun onSuccess(userInfo: AuthUserInfo) {

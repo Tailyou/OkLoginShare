@@ -7,8 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * 分享平台（QQ空间、QQ好友、微博、微信好友、微信朋友圈、微信收藏）
- *
- * @author 祝文飞（Tailyou）
  * @time 2017/6/6 18:35
  */
 @Retention(RetentionPolicy.SOURCE)

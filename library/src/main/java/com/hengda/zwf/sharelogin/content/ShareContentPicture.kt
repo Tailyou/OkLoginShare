@@ -6,7 +6,6 @@ import com.hengda.zwf.sharelogin.type.ContentType
 
 /**
  * 分享类型-图片
- * @author 祝文飞（Tailyou）
  * @time 2017/6/6 16:29
  */
 class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
