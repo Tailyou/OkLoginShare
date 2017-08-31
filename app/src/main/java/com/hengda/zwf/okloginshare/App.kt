@@ -4,12 +4,6 @@ import android.support.multidex.MultiDexApplication
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 
-/**
- * 作者：祝文飞（Tailyou）
- * 邮箱：tailyou@163.com
- * 时间：2017/6/6 18:53
- * 描述：
- */
 class App : MultiDexApplication() {
 
     override fun onCreate() {
@@ -19,7 +13,6 @@ class App : MultiDexApplication() {
 
     /**
      * 初始化 ShareLoginClient
-     * @author 祝文飞（Tailyou）
      * @time 2017/6/6 13:40
      */
     private fun initShareLoginClient() {
