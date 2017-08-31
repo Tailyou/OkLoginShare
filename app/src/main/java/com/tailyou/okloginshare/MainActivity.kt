@@ -1,4 +1,4 @@
-package com.hengda.zwf.okloginshare
+package com.tailyou.okloginshare
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.hengda.zwf.commonutil.SDCardUtil
+import com.hengda.zwf.okloginshare.R
 import com.hengda.zwf.sharelogin.*
 import com.hengda.zwf.sharelogin.content.ShareContent
 import com.hengda.zwf.sharelogin.content.ShareContentPage

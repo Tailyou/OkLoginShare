@@ -1,4 +1,4 @@
-package com.hengda.zwf.okloginshare
+package com.tailyou.okloginshare
 
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils

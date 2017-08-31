@@ -1,6 +1,7 @@
-package com.hengda.zwf.okloginshare
+package com.tailyou.okloginshare
 
 import android.support.multidex.MultiDexApplication
+import com.hengda.zwf.okloginshare.R
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 
