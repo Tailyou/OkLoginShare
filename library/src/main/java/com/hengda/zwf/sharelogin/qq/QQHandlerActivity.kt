@@ -201,7 +201,7 @@ class QQHandlerActivity : Activity() {
         return params
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (mUIListener != null) {
             Tencent.handleResultData(data, mUIListener)
