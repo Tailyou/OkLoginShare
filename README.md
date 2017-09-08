@@ -9,7 +9,7 @@ OkLoginShare是一个封装了QQ、微信、微博登录和分享功能的库，
 ## 二、版本
 
 已上传JitPack，最新版本0.0.1，直接在gradle中添加依赖即可。  
-compile 'com.github.Tailyou:OkLoginShare:0.0.1'
+compile 'com.github.Tailyou:OkLoginShare:1.3'
 
 ## 三、使用
 
