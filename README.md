@@ -19,10 +19,22 @@ compile 'com.github.Tailyou:OkLoginShare:1.3'
 
 配置非常简单，不需要拷贝jar文件，不需要修改AndroidManifest.xml.  
 
-添加对ShareLogin的依赖即可。
+在 app build.gradle中添加对ShareLogin的依赖。
 
 ```groovy
    compile 'com.github.Tailyou:OkLoginShare:0.0.1'
+```
+
+在工作空间的build.gradle中配置 maven { url 'https://jitpack.io' }
+                             maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+
+```groovy
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+    }
 ```
 
 如果用到QQ平台，需要在app的defaultConfig中配置tencentAuthId，如下所示
