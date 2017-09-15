@@ -46,9 +46,9 @@ class QQHandlerActivity : Activity() {
      */
     private fun doLogin(loginListener: ILoginListener) {
         mUIListener = object : IUiListener {
-            override fun onComplete(`object`: Any) {
+            override fun onComplete(p0: Any?) {
                 try {
-                    val jsonObject = `object` as JSONObject
+                    val jsonObject = p0 as JSONObject
                     val token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN)
                     val openId = jsonObject.getString(Constants.PARAM_OPEN_ID)
                     val expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN)
@@ -58,12 +58,12 @@ class QQHandlerActivity : Activity() {
                 }
             }
 
-            override fun onError(uiError: UiError) {
-                loginListener.onError(uiError.errorMessage)
-            }
-
             override fun onCancel() {
                 loginListener.onCancel()
+            }
+
+            override fun onError(p0: UiError?) {
+                loginListener.onError(p0?.errorMessage)
             }
         }
         val tencent = Tencent.createInstance(ShareLoginConfig.qqAppId, this.applicationContext)
@@ -80,7 +80,7 @@ class QQHandlerActivity : Activity() {
      */
     private fun doShare(sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener) {
         mUIListener = object : IUiListener {
-            override fun onComplete(response: Any) {
+            override fun onComplete(p0: Any?) {
                 shareListener.onSuccess()
             }
 
@@ -88,8 +88,8 @@ class QQHandlerActivity : Activity() {
                 shareListener.onCancel()
             }
 
-            override fun onError(e: UiError) {
-                shareListener.onError(e.errorMessage)
+            override fun onError(p0: UiError?) {
+                shareListener.onError(p0?.errorMessage)
             }
         }
         val tencent = Tencent.createInstance(ShareLoginConfig.qqAppId, applicationContext)

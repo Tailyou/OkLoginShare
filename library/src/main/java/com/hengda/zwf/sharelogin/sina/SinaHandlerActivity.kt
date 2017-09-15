@@ -58,12 +58,12 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
                 }
             }
 
-            override fun cancel() {
-                loginListener.onCancel()
+            override fun onFailure(p0: WbConnectErrorMessage?) {
+                loginListener.onError(p0?.errorMessage)
             }
 
-            override fun onFailure(wbConnectErrorMessage: WbConnectErrorMessage) {
-                loginListener.onError(wbConnectErrorMessage.errorMessage)
+            override fun cancel() {
+                loginListener.onCancel()
             }
         })
     }

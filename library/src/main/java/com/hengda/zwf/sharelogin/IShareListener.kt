@@ -10,6 +10,6 @@ interface IShareListener {
 
     fun onCancel()
 
-    fun onError(msg: String)
+    fun onError(msg: String?)
 
 }

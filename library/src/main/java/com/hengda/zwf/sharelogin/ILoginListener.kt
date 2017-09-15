@@ -8,7 +8,7 @@ interface ILoginListener {
 
     fun onSuccess(accessToken: String, uId: String, expiresIn: Long)
 
-    fun onError(errorMsg: String)
+    fun onError(errorMsg: String?)
 
     fun onCancel()
 
