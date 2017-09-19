@@ -2,7 +2,6 @@ package com.hengda.zwf.sharelogin.sina
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 
@@ -10,6 +9,9 @@ import com.hengda.zwf.sharelogin.ILoginListener
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 import com.hengda.zwf.sharelogin.content.ShareContent
+import com.hengda.zwf.sharelogin.content.ShareContentPage
+import com.hengda.zwf.sharelogin.content.ShareContentImage
+import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.sina.weibo.sdk.WbSdk
 import com.sina.weibo.sdk.api.ImageObject
@@ -77,9 +79,9 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
         shareHandler!!.registerApp()
         val weiboMessage = WeiboMultiMessage()
         when (shareContent.type) {
-            ContentType.TEXT -> weiboMessage.textObject = getTextObj(shareContent)
-            ContentType.PIC -> weiboMessage.imageObject = getImageObj(shareContent)
-            ContentType.WEBPAGE -> weiboMessage.mediaObject = getWebpageObj(shareContent)
+            ContentType.PIC -> weiboMessage.imageObject = getImageObj(shareContent as ShareContentImage)
+            ContentType.TEXT -> weiboMessage.textObject = getTextObj(shareContent as ShareContentText)
+            ContentType.WEBPAGE -> weiboMessage.mediaObject = getWebpageObj(shareContent as ShareContentPage)
         }
         shareHandler!!.shareMessage(weiboMessage, false)
     }
@@ -88,7 +90,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      * 创建文本消息对象
      * @time 2017/6/6 15:01
      */
-    private fun getTextObj(shareContent: ShareContent): TextObject {
+    private fun getTextObj(shareContent: ShareContentText): TextObject {
         val textObject = TextObject()
         textObject.text = shareContent.text
         return textObject
@@ -98,9 +100,9 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      * 创建图片消息对象
      * @time 2017/6/6 15:26
      */
-    private fun getImageObj(shareContent: ShareContent): ImageObject {
+    private fun getImageObj(shareContent: ShareContentImage): ImageObject {
         val imageObject = ImageObject()
-        imageObject.imagePath = shareContent.largeBmpPath
+        imageObject.imagePath = shareContent.largeImgPath
         return imageObject
     }
 
@@ -108,17 +110,15 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      * 创建多媒体（网页）消息对象。
      * @time 2017/6/6 15:30
      */
-    private fun getWebpageObj(shareContent: ShareContent): WebpageObject {
+    private fun getWebpageObj(shareContent: ShareContentPage): WebpageObject {
         val mediaObject = WebpageObject()
         mediaObject.identify = Utility.generateGUID()
         mediaObject.title = shareContent.title//标题
         mediaObject.description = shareContent.text//摘要
         mediaObject.actionUrl = shareContent.url//地址
-        if (shareContent.thumbBmpBytes != null) {
-            val thumbBmpBytes = shareContent.thumbBmpBytes
-            val bitmap = BitmapFactory.decodeByteArray(thumbBmpBytes, 0, thumbBmpBytes!!.size)
-            mediaObject.setThumbImage(bitmap)//缩略图
-        }
+        val thumbBmpBytes = shareContent.thumbImgBytes
+        val bitmap = BitmapFactory.decodeByteArray(thumbBmpBytes, 0, thumbBmpBytes.size)
+        mediaObject.setThumbImage(bitmap)//缩略图
         return mediaObject
     }
 

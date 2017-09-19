@@ -8,7 +8,7 @@ import com.hengda.zwf.sharelogin.type.ContentType
  * 分享类型-网页
  * @time 2017/6/6 16:29
  */
-class ShareContentPage(override val title: String, override val text: String, override val url: String, override val largeBmpPath: String?, override val thumbBmpBytes: ByteArray?) : ShareContent {
+class ShareContentPage(override val title: String, override val text: String, override val url: String, override val largeImgPath: String, override val thumbImgBytes: ByteArray) : ShareContent {
 
     override val type: Int
         get() = ContentType.WEBPAGE
@@ -34,8 +34,8 @@ class ShareContentPage(override val title: String, override val text: String, ov
         dest.writeString(title)
         dest.writeString(text)
         dest.writeString(url)
-        dest.writeString(largeBmpPath)
-        dest.writeByteArray(thumbBmpBytes)
+        dest.writeString(largeImgPath)
+        dest.writeByteArray(thumbImgBytes)
     }
 
 }

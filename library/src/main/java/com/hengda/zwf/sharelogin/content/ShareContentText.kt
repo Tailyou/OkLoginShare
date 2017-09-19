@@ -19,10 +19,10 @@ class ShareContentText(override val text: String) : ShareContent {
     override val url: String?
         get() = null
 
-    override val thumbBmpBytes: ByteArray?
+    override val thumbImgBytes: ByteArray?
         get() = null
 
-    override val largeBmpPath: String?
+    override val largeImgPath: String?
         get() = null
 
     companion object {

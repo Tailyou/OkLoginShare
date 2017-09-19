@@ -9,6 +9,9 @@ import com.hengda.zwf.sharelogin.IShareListener
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 import com.hengda.zwf.sharelogin.content.ShareContent
+import com.hengda.zwf.sharelogin.content.ShareContentPage
+import com.hengda.zwf.sharelogin.content.ShareContentImage
+import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.hengda.zwf.sharelogin.type.SharePlatform
 import com.sina.weibo.sdk.exception.WeiboException
@@ -104,19 +107,20 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
      */
     private fun setupMessage(shareContent: ShareContent): WXMediaMessage {
         val msg = WXMediaMessage()
-        msg.title = shareContent.title
-        msg.description = shareContent.text
-        msg.thumbData = shareContent.thumbBmpBytes
         when (shareContent.type) {
             ContentType.TEXT ->
                 // 纯文字
-                msg.mediaObject = getTextObj(shareContent)
+                msg.mediaObject = getTextObj(shareContent as ShareContentText)
             ContentType.PIC ->
                 // 纯图片
-                msg.mediaObject = getImageObj(shareContent)
+                msg.mediaObject = getImageObj(shareContent as ShareContentImage)
             ContentType.WEBPAGE ->
                 // 网页（图文）
-                msg.mediaObject = getWebPageObj(shareContent)
+            {
+                msg.title = shareContent.title
+                msg.description = shareContent.text
+                msg.mediaObject = getWebPageObj(shareContent as ShareContentPage)
+            }
             else -> throw UnsupportedOperationException("不支持的分享内容")
         }
         if (!msg.mediaObject.checkArgs()) {
@@ -125,19 +129,19 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
         return msg
     }
 
-    private fun getTextObj(shareContent: ShareContent): WXMediaMessage.IMediaObject {
+    private fun getTextObj(shareContent: ShareContentText): WXMediaMessage.IMediaObject {
         val text = WXTextObject()
         text.text = shareContent.text
         return text
     }
 
-    private fun getImageObj(shareContent: ShareContent): WXMediaMessage.IMediaObject {
+    private fun getImageObj(shareContent: ShareContentImage): WXMediaMessage.IMediaObject {
         val image = WXImageObject()
-        image.imagePath = shareContent.largeBmpPath
+        image.imagePath = shareContent.largeImgPath
         return image
     }
 
-    private fun getWebPageObj(shareContent: ShareContent): WXMediaMessage.IMediaObject {
+    private fun getWebPageObj(shareContent: ShareContentPage): WXMediaMessage.IMediaObject {
         val webPage = WXWebpageObject()
         webPage.webpageUrl = shareContent.url
         return webPage

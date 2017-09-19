@@ -8,7 +8,7 @@ import com.hengda.zwf.sharelogin.type.ContentType
  * 分享类型-图片
  * @time 2017/6/6 16:29
  */
-class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
+class ShareContentImage(override val largeImgPath: String) : ShareContent {
 
     override val type: Int
         get() = ContentType.PIC
@@ -22,13 +22,13 @@ class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
     override val url: String?
         get() = null
 
-    override val thumbBmpBytes: ByteArray?
+    override val thumbImgBytes: ByteArray?
         get() = null
 
     companion object {
-        @JvmField val CREATOR: Parcelable.Creator<ShareContentPicture> = object : Parcelable.Creator<ShareContentPicture> {
-            override fun createFromParcel(source: Parcel): ShareContentPicture = ShareContentPicture(source)
-            override fun newArray(size: Int): Array<ShareContentPicture?> = arrayOfNulls(size)
+        @JvmField val CREATOR: Parcelable.Creator<ShareContentImage> = object : Parcelable.Creator<ShareContentImage> {
+            override fun createFromParcel(source: Parcel): ShareContentImage = ShareContentImage(source)
+            override fun newArray(size: Int): Array<ShareContentImage?> = arrayOfNulls(size)
         }
     }
 
@@ -39,7 +39,7 @@ class ShareContentPicture(override val largeBmpPath: String?) : ShareContent {
     override fun describeContents() = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(largeBmpPath)
+        dest.writeString(largeImgPath)
     }
 
 }

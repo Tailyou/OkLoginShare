@@ -9,7 +9,7 @@ import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 import com.hengda.zwf.sharelogin.content.ShareContent
 import com.hengda.zwf.sharelogin.content.ShareContentPage
-import com.hengda.zwf.sharelogin.content.ShareContentPicture
+import com.hengda.zwf.sharelogin.content.ShareContentImage
 import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.hengda.zwf.sharelogin.type.SharePlatform
@@ -96,20 +96,20 @@ class QQHandlerActivity : Activity() {
         if (sharePlatform == SharePlatform.QQ_FRIEND) {
             when (shareContent.type) {
                 ContentType.TEXT //文本
-                -> shareQQText(shareContent.text!!)
+                -> shareQQText(shareContent as ShareContentText)
                 ContentType.PIC //图片
-                -> tencent.shareToQQ(this, setupQQImageBundle(shareContent), mUIListener)
+                -> tencent.shareToQQ(this, setupQQImageBundle(shareContent as ShareContentImage), mUIListener)
                 ContentType.WEBPAGE //网页（图文）
-                -> tencent.shareToQQ(this, setupQQPageBundle(shareContent), mUIListener)
+                -> tencent.shareToQQ(this, setupQQPageBundle(shareContent as ShareContentPage), mUIListener)
             }
         } else {
             when (shareContent.type) {
                 ContentType.TEXT //文本
-                -> tencent.publishToQzone(this, setupQzoneTextBundle(shareContent), mUIListener)
+                -> tencent.publishToQzone(this, setupQzoneTextBundle(shareContent as ShareContentText), mUIListener)
                 ContentType.PIC //图片
-                -> tencent.publishToQzone(this, setupQzoneImageBundle(shareContent), mUIListener)
+                -> tencent.publishToQzone(this, setupQzoneImageBundle(shareContent as ShareContentImage), mUIListener)
                 ContentType.WEBPAGE //网页（图文）
-                -> tencent.shareToQzone(this, setupQzonePageBundle(shareContent), mUIListener)
+                -> tencent.shareToQzone(this, setupQzonePageBundle(shareContent as ShareContentPage), mUIListener)
             }
         }
     }
@@ -118,10 +118,10 @@ class QQHandlerActivity : Activity() {
      * QQ好友-文本
      * @time 2017/6/7 17:06
      */
-    fun shareQQText(text: String) {
+    fun shareQQText(shareContent: ShareContentText) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(Intent.EXTRA_TEXT, text)
+        sendIntent.putExtra(Intent.EXTRA_TEXT, shareContent.text)
         sendIntent.type = "text/plain"
         sendIntent.setClassName("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity")
         startActivity(sendIntent)
@@ -132,15 +132,15 @@ class QQHandlerActivity : Activity() {
      * QQ好友-图片
      * @time 2017/6/6 15:26
      */
-    private fun setupQQImageBundle(shareContent: ShareContent): Bundle {
-        var shareContentPicture = shareContent as ShareContentPicture
+    private fun setupQQImageBundle(shareContent: ShareContentImage): Bundle {
+        var shareContentPicture = shareContent
         val params = Bundle()
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE)
-        val uri = shareContentPicture.largeBmpPath
-        if (uri!!.startsWith("http")) {
-            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, uri)
+        val imgPath = shareContentPicture.largeImgPath
+        if (imgPath!!.startsWith("http")) {
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imgPath)
         } else {
-            params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, uri)
+            params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, imgPath)
         }
         return params
     }
@@ -149,13 +149,13 @@ class QQHandlerActivity : Activity() {
      * QQ好友-网页（图文）
      * @time 2017/6/6 15:30
      */
-    private fun setupQQPageBundle(shareContent: ShareContent): Bundle {
-        var shareContentPage = shareContent as ShareContentPage
+    private fun setupQQPageBundle(shareContent: ShareContentPage): Bundle {
+        var shareContentPage = shareContent
         val params = Bundle()
         params.putString(QQShare.SHARE_TO_QQ_TITLE, shareContentPage.title)
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, shareContentPage.text)
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, shareContentPage.url)
-        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareContentPage.largeBmpPath)
+        params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, shareContentPage.largeImgPath)
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT)
         return params
     }
@@ -164,8 +164,8 @@ class QQHandlerActivity : Activity() {
      * QQ空间-说说-文本
      * @time 2017/6/8 8:21
      */
-    private fun setupQzoneTextBundle(shareContent: ShareContent): Bundle {
-        var shareContentText = shareContent as ShareContentText
+    private fun setupQzoneTextBundle(shareContent: ShareContentText): Bundle {
+        var shareContentText = shareContent
         val params = Bundle()
         params.putInt(QzonePublish.PUBLISH_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD)
         params.putString(QzonePublish.PUBLISH_TO_QZONE_SUMMARY, shareContentText.text)
@@ -176,11 +176,11 @@ class QQHandlerActivity : Activity() {
      * QQ空间-说说-图片
      * @time 2017/6/8 8:21
      */
-    private fun setupQzoneImageBundle(shareContent: ShareContent): Bundle {
-        var shareContentPicture = shareContent as ShareContentPicture
+    private fun setupQzoneImageBundle(shareContent: ShareContentImage): Bundle {
+        var shareContentPicture = shareContent
         val params = Bundle()
         params.putInt(QzonePublish.PUBLISH_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD)
-        val value = ArrayList(listOf(shareContentPicture.largeBmpPath))
+        val value = ArrayList(listOf(shareContentPicture.largeImgPath))
         params.putStringArrayList(QzonePublish.PUBLISH_TO_QZONE_IMAGE_URL, value)
         return params
     }
@@ -189,14 +189,14 @@ class QQHandlerActivity : Activity() {
      * QQ空间分享-网页（图文）
      * @time 2017/6/7 12:12
      */
-    private fun setupQzonePageBundle(shareContent: ShareContent): Bundle {
-        var shareContentPage = shareContent as ShareContentPage
+    private fun setupQzonePageBundle(shareContent: ShareContentPage): Bundle {
+        var shareContentPage = shareContent
         val params = Bundle()
         params.putInt(QzoneShare.SHARE_TO_QZONE_KEY_TYPE, QzoneShare.SHARE_TO_QZONE_TYPE_IMAGE_TEXT)
         params.putString(QzoneShare.SHARE_TO_QQ_TITLE, shareContentPage.title)
         params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, shareContentPage.text)
         params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, shareContentPage.url)
-        val value = ArrayList(listOf(shareContentPage.largeBmpPath))
+        val value = ArrayList(listOf(shareContentPage.largeImgPath))
         params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, value)
         return params
     }

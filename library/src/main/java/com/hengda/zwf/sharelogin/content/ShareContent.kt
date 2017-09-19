@@ -30,11 +30,11 @@ interface ShareContent : Parcelable {
     /**
      * 缩略图
      */
-    val thumbBmpBytes: ByteArray?
+    val thumbImgBytes: ByteArray?
 
     /**
      * 大图
      */
-    val largeBmpPath: String?
+    val largeImgPath: String?
 
 }
