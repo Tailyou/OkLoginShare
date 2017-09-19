@@ -10,8 +10,8 @@ import com.hengda.zwf.commonutil.SDCardUtil
 import com.hengda.zwf.okloginshare.R
 import com.hengda.zwf.sharelogin.*
 import com.hengda.zwf.sharelogin.content.ShareContent
+import com.hengda.zwf.sharelogin.content.ShareContentImage
 import com.hengda.zwf.sharelogin.content.ShareContentPage
-import com.hengda.zwf.sharelogin.content.ShareContentPicture
 import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.LoginPlatform
 import com.hengda.zwf.sharelogin.type.SharePlatform
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         rgShareContentType.setOnCheckedChangeListener({ _, checkedId ->
             when (checkedId) {
                 R.id.rbText -> mShareContent = ShareContentText("我感觉这是个神奇的问题，昨天项目还一切OK")
-                R.id.rbPicture -> mShareContent = ShareContentPicture(mLargeBmpPath)
+                R.id.rbPicture -> mShareContent = ShareContentImage(mLargeBmpPath)
                 R.id.rbWebPage -> mShareContent = ShareContentPage("这是标题，好像不够长",
                         "我感觉这是个神奇的问题，昨天项目还一切OK",
                         "https://segmentfault.com/q/1010000009688458",
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 toast("share cancel")
             }
 
-            override fun onError(msg: String) {
+            override fun onError(msg: String?) {
                 toast("share error")
             }
         })
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 toast("$accessToken,$uId")
             }
 
-            override fun onError(errorMsg: String) {
+            override fun onError(errorMsg: String?) {
                 toast("login error:$errorMsg")
             }
 
