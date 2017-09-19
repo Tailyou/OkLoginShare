@@ -113,10 +113,12 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
         mediaObject.identify = Utility.generateGUID()
         mediaObject.title = shareContent.title//标题
         mediaObject.description = shareContent.text//摘要
-        val thumbBmpBytes = shareContent.thumbBmpBytes
-        val bitmap = BitmapFactory.decodeByteArray(thumbBmpBytes, 0, thumbBmpBytes!!.size)
-        mediaObject.setThumbImage(bitmap)//缩略图
         mediaObject.actionUrl = shareContent.url//地址
+        if (shareContent.thumbBmpBytes != null) {
+            val thumbBmpBytes = shareContent.thumbBmpBytes
+            val bitmap = BitmapFactory.decodeByteArray(thumbBmpBytes, 0, thumbBmpBytes!!.size)
+            mediaObject.setThumbImage(bitmap)//缩略图
+        }
         return mediaObject
     }
 
