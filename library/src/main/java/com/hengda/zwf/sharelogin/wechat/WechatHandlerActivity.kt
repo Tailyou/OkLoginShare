@@ -30,19 +30,19 @@ import org.json.JSONObject
 
 class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
-    private var api: IWXAPI? = null
+    lateinit var api: IWXAPI
     val TAG = "WechatHandlerActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         api = WXAPIFactory.createWXAPI(this, ShareLoginConfig.weiXinAppId, true)
-        api!!.handleIntent(intent, this)
+        api.handleIntent(intent, this)
         finish()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        api!!.handleIntent(getIntent(), this)
+        api.handleIntent(getIntent(), this)
         finish()
     }
 
@@ -52,9 +52,9 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
 
     override fun onResp(baseResp: BaseResp) {
         if (baseResp is SendAuth.Resp && baseResp.type == 1) {
-            parseLoginResp(this, baseResp, ShareLoginClient.sLoginListener!!)
+            parseLoginResp(this, baseResp, ShareLoginClient.sLoginListener)
         } else {
-            parseShareResp(baseResp, ShareLoginClient.sShareListener!!)
+            parseShareResp(baseResp, ShareLoginClient.sShareListener)
         }
         finish()
     }

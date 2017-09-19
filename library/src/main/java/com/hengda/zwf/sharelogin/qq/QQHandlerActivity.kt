@@ -8,8 +8,8 @@ import com.hengda.zwf.sharelogin.IShareListener
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 import com.hengda.zwf.sharelogin.content.ShareContent
-import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentImage
+import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.hengda.zwf.sharelogin.type.SharePlatform
@@ -21,11 +21,10 @@ import com.tencent.tauth.IUiListener
 import com.tencent.tauth.Tencent
 import com.tencent.tauth.UiError
 import org.json.JSONObject
-import java.util.*
 
 class QQHandlerActivity : Activity() {
 
-    private var mUIListener: IUiListener? = null
+    lateinit var mUIListener: IUiListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,8 +179,7 @@ class QQHandlerActivity : Activity() {
         var shareContentPicture = shareContent
         val params = Bundle()
         params.putInt(QzonePublish.PUBLISH_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD)
-        val value = ArrayList(listOf(shareContentPicture.largeImgPath))
-        params.putStringArrayList(QzonePublish.PUBLISH_TO_QZONE_IMAGE_URL, value)
+        params.putString(QzonePublish.PUBLISH_TO_QZONE_IMAGE_URL, shareContentPicture.largeImgPath)
         return params
     }
 
@@ -196,8 +194,7 @@ class QQHandlerActivity : Activity() {
         params.putString(QzoneShare.SHARE_TO_QQ_TITLE, shareContentPage.title)
         params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, shareContentPage.text)
         params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, shareContentPage.url)
-        val value = ArrayList(listOf(shareContentPage.largeImgPath))
-        params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, value)
+        params.putString(QzoneShare.SHARE_TO_QQ_IMAGE_URL, shareContentPage.largeImgPath)
         return params
     }
 

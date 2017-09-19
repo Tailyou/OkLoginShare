@@ -4,13 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
-
 import com.hengda.zwf.sharelogin.ILoginListener
 import com.hengda.zwf.sharelogin.ShareLoginClient
 import com.hengda.zwf.sharelogin.ShareLoginConfig
 import com.hengda.zwf.sharelogin.content.ShareContent
-import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentImage
+import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.sina.weibo.sdk.WbSdk
@@ -29,14 +28,14 @@ import com.sina.weibo.sdk.utils.Utility
 
 class SinaHandlerActivity : Activity(), WbShareCallback {
 
-    private var mSsoHandler: SsoHandler? = null
-    private var shareHandler: WbShareHandler? = null
+    lateinit var mSsoHandler: SsoHandler
+    lateinit var shareHandler: WbShareHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WbSdk.install(this, AuthInfo(this, ShareLoginConfig.weiBoAppId, ShareLoginConfig.weiBoRedirectUrl, ShareLoginConfig.weiBoScope))
         when (intent.action) {
-            ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener!!)
+            ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener)
             ShareLoginClient.ACTION_SHARE -> {
                 val shareContent = intent.extras.get(ShareLoginClient.SHARE_CONTENT) as ShareContent
                 doShare(shareContent)
@@ -51,7 +50,7 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      */
     private fun doLogin(loginListener: ILoginListener) {
         mSsoHandler = SsoHandler(this)
-        mSsoHandler!!.authorizeClientSso(object : WbAuthListener {
+        mSsoHandler.authorizeClientSso(object : WbAuthListener {
             override fun onSuccess(oauth2AccessToken: Oauth2AccessToken) {
                 if (oauth2AccessToken.isSessionValid) {
                     loginListener.onSuccess(oauth2AccessToken.token, oauth2AccessToken.uid, oauth2AccessToken.expiresTime / 1000000)
@@ -76,14 +75,14 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      */
     private fun doShare(shareContent: ShareContent) {
         shareHandler = WbShareHandler(this)
-        shareHandler!!.registerApp()
+        shareHandler.registerApp()
         val weiboMessage = WeiboMultiMessage()
         when (shareContent.type) {
             ContentType.PIC -> weiboMessage.imageObject = getImageObj(shareContent as ShareContentImage)
             ContentType.TEXT -> weiboMessage.textObject = getTextObj(shareContent as ShareContentText)
             ContentType.WEBPAGE -> weiboMessage.mediaObject = getWebpageObj(shareContent as ShareContentPage)
         }
-        shareHandler!!.shareMessage(weiboMessage, false)
+        shareHandler.shareMessage(weiboMessage, false)
     }
 
     /**
@@ -139,16 +138,14 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        shareHandler!!.doResultIntent(intent, this)
+        shareHandler.doResultIntent(intent, this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // SSO 授权回调
         // 重要：发起 SSO 登陆的 Activity 必须重写 onActivityResults
-        if (mSsoHandler != null) {
-            mSsoHandler!!.authorizeCallBack(requestCode, resultCode, data)
-        }
+        mSsoHandler.authorizeCallBack(requestCode, resultCode, data)
         finish()
     }
 

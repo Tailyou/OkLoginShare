@@ -21,8 +21,8 @@ object ShareLoginClient {
     const val ACTION_LOGIN = "ACTION_LOGIN"
     const val ACTION_SHARE = "ACTION_SHARE"
 
-    var sLoginListener: ILoginListener? = null
-    var sShareListener: IShareListener? = null
+    lateinit var sLoginListener: ILoginListener
+    lateinit var sShareListener: IShareListener
 
     fun init(slc: ShareLoginConfig) {
         if (slc.isDebug) {
@@ -59,24 +59,14 @@ object ShareLoginClient {
      * 第三方登录
      * @time 2017/6/6 13:52
      */
-    fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener?) {
+    fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener) {
         ShareLoginClient.sLoginListener = loginListener
         when (type) {
-            WEIBO -> if (isWeiBoInstalled(activity)) {
-                toLogin(activity, SinaHandlerActivity::class.java)
-            } else {
-                loginListener?.onError("未安装微博")
-            }
-            QQ -> if (isQQInstalled(activity)) {
-                toLogin(activity, QQHandlerActivity::class.java)
-            } else {
-                loginListener?.onError("未安装QQ")
-            }
-            WEIXIN -> if (isWeiXinInstalled(activity)) {
+            WEIBO -> toLogin(activity, SinaHandlerActivity::class.java)
+            QQ -> toLogin(activity, QQHandlerActivity::class.java)
+            WEIXIN -> {
                 WechatHandlerActivity.doLogin(activity)
                 activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            } else {
-                loginListener?.onError("未安装微信")
             }
         }
     }
@@ -96,24 +86,12 @@ object ShareLoginClient {
      * 第三方分享
      * @time 2017/6/7 9:51
      */
-    fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener?) {
+    fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener) {
         ShareLoginClient.sShareListener = shareListener
         when (sharePlatform) {
-            WEIBO_TIME_LINE -> if (isWeiBoInstalled(activity)) {
-                toShare(activity, sharePlatform, shareContent, SinaHandlerActivity::class.java)
-            } else {
-                shareListener?.onError("未安装微博")
-            }
-            QQ_FRIEND, QQ_ZONE -> if (isQQInstalled(activity)) {
-                toShare(activity, sharePlatform, shareContent, QQHandlerActivity::class.java)
-            } else {
-                shareListener?.onError("未安装QQ")
-            }
-            WEIXIN_FRIEND, WEIXIN_FRIEND_ZONE, WEIXIN_FAVORITE -> if (isWeiXinInstalled(activity)) {
-                WechatHandlerActivity().doShare(activity, shareContent, sharePlatform)
-            } else {
-                shareListener?.onError("未安装微信")
-            }
+            WEIBO_TIME_LINE -> toShare(activity, sharePlatform, shareContent, SinaHandlerActivity::class.java)
+            QQ_FRIEND, QQ_ZONE -> toShare(activity, sharePlatform, shareContent, QQHandlerActivity::class.java)
+            WEIXIN_FRIEND, WEIXIN_FRIEND_ZONE, WEIXIN_FAVORITE -> WechatHandlerActivity().doShare(activity, shareContent, sharePlatform)
         }
     }
 
