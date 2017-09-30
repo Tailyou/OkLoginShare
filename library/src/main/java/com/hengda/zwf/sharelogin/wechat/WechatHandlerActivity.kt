@@ -107,6 +107,8 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
      */
     private fun setupMessage(shareContent: ShareContent): WXMediaMessage {
         val msg = WXMediaMessage()
+        msg.title = shareContent.title
+        msg.description = shareContent.text
         when (shareContent.type) {
             ContentType.TEXT ->
                 // 纯文字
@@ -116,11 +118,7 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
                 msg.mediaObject = getImageObj(shareContent as ShareContentImage)
             ContentType.WEBPAGE ->
                 // 网页（图文）
-            {
-                msg.title = shareContent.title
-                msg.description = shareContent.text
                 msg.mediaObject = getWebPageObj(shareContent as ShareContentPage)
-            }
             else -> throw UnsupportedOperationException("不支持的分享内容")
         }
         if (!msg.mediaObject.checkArgs()) {

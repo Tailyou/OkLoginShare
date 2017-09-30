@@ -136,7 +136,7 @@ class QQHandlerActivity : Activity() {
         val params = Bundle()
         params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_IMAGE)
         val imgPath = shareContentPicture.largeImgPath
-        if (imgPath!!.startsWith("http")) {
+        if (imgPath.startsWith("http")) {
             params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, imgPath)
         } else {
             params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, imgPath)
@@ -179,7 +179,7 @@ class QQHandlerActivity : Activity() {
         var shareContentPicture = shareContent
         val params = Bundle()
         params.putInt(QzonePublish.PUBLISH_TO_QZONE_KEY_TYPE, QzonePublish.PUBLISH_TO_QZONE_TYPE_PUBLISHMOOD)
-        params.putString(QzonePublish.PUBLISH_TO_QZONE_IMAGE_URL, shareContentPicture.largeImgPath)
+        params.putStringArrayList(QzonePublish.PUBLISH_TO_QZONE_IMAGE_URL, arrayListOf(shareContentPicture.largeImgPath))
         return params
     }
 
@@ -195,6 +195,7 @@ class QQHandlerActivity : Activity() {
         params.putString(QzoneShare.SHARE_TO_QQ_SUMMARY, shareContentPage.text)
         params.putString(QzoneShare.SHARE_TO_QQ_TARGET_URL, shareContentPage.url)
         params.putString(QzoneShare.SHARE_TO_QQ_IMAGE_URL, shareContentPage.largeImgPath)
+        params.putStringArrayList(QzoneShare.SHARE_TO_QQ_IMAGE_URL, arrayListOf(shareContentPage.largeImgPath))
         return params
     }
 
