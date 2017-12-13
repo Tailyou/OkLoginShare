@@ -13,6 +13,7 @@ import com.hengda.zwf.sharelogin.content.ShareContentPage
 import com.hengda.zwf.sharelogin.content.ShareContentText
 import com.hengda.zwf.sharelogin.type.ContentType
 import com.hengda.zwf.sharelogin.type.SharePlatform
+import com.hengda.zwf.sharelogin.wechat.WechatHandlerActivity.Companion.doLogin
 import com.tencent.connect.common.Constants
 import com.tencent.connect.share.QQShare
 import com.tencent.connect.share.QzonePublish
@@ -24,16 +25,24 @@ import org.json.JSONObject
 
 class QQHandlerActivity : Activity() {
 
-    lateinit var mUIListener: IUiListener
+    private lateinit var mUIListener: IUiListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        when (intent.action) {
-            ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener!!)
-            ShareLoginClient.ACTION_SHARE -> {
-                val shareContent = intent.extras.get(ShareLoginClient.SHARE_CONTENT) as ShareContent
-                val sharePlatform = intent.extras.getString(ShareLoginClient.SHARE_PLATFORM)
-                doShare(sharePlatform, shareContent, ShareLoginClient.sShareListener!!)
+        if (intent != null && !intent.action.isNullOrBlank()) {
+            when (intent.action) {
+                ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener!!)
+                ShareLoginClient.ACTION_SHARE -> {
+                    if (intent.hasExtra(ShareLoginClient.SHARE_CONTENT) &&
+                            intent.hasExtra(ShareLoginClient.SHARE_PLATFORM)) {
+                        val shareContent = intent.extras.get(ShareLoginClient.SHARE_CONTENT) as ShareContent
+                        val sharePlatform = intent.extras.getString(ShareLoginClient.SHARE_PLATFORM)
+                        doShare(sharePlatform, shareContent, ShareLoginClient.sShareListener!!)
+                    }
+                }
+                else -> {
+                    //ignore
+                }
             }
         }
     }
@@ -117,7 +126,7 @@ class QQHandlerActivity : Activity() {
      * QQ好友-文本
      * @time 2017/6/7 17:06
      */
-    fun shareQQText(shareContent: ShareContentText) {
+    private fun shareQQText(shareContent: ShareContentText) {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(Intent.EXTRA_TEXT, shareContent.text)
