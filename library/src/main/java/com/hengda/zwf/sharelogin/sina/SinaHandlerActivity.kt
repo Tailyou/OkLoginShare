@@ -48,23 +48,23 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
      * @param loginListener
      * @time 2017/6/6 13:46
      */
-    private fun doLogin(loginListener: ILoginListener) {
+    private fun doLogin(loginListener: ILoginListener?) {
         mSsoHandler = SsoHandler(this)
         mSsoHandler.authorizeClientSso(object : WbAuthListener {
             override fun onSuccess(oauth2AccessToken: Oauth2AccessToken) {
                 if (oauth2AccessToken.isSessionValid) {
-                    loginListener.onSuccess(oauth2AccessToken.token, oauth2AccessToken.uid, oauth2AccessToken.expiresTime / 1000000)
+                    loginListener?.onSuccess(oauth2AccessToken.token, oauth2AccessToken.uid, oauth2AccessToken.expiresTime / 1000000)
                 } else {
-                    loginListener.onError("登录失败")
+                    loginListener?.onError("登录失败")
                 }
             }
 
             override fun onFailure(p0: WbConnectErrorMessage?) {
-                loginListener.onError(p0?.errorMessage)
+                loginListener?.onError(p0?.errorMessage)
             }
 
             override fun cancel() {
-                loginListener.onCancel()
+                loginListener?.onCancel()
             }
         })
     }
@@ -122,17 +122,17 @@ class SinaHandlerActivity : Activity(), WbShareCallback {
     }
 
     override fun onWbShareSuccess() {
-        ShareLoginClient.sShareListener!!.onSuccess()
+        ShareLoginClient.sShareListener?.onSuccess()
         finish()
     }
 
     override fun onWbShareCancel() {
-        ShareLoginClient.sShareListener!!.onCancel()
+        ShareLoginClient.sShareListener?.onCancel()
         finish()
     }
 
     override fun onWbShareFail() {
-        ShareLoginClient.sShareListener!!.onError("分享失败")
+        ShareLoginClient.sShareListener?.onError("分享失败")
         finish()
     }
 

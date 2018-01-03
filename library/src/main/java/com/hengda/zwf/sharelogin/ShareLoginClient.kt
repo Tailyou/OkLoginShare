@@ -21,8 +21,8 @@ object ShareLoginClient {
     const val ACTION_LOGIN = "ACTION_LOGIN"
     const val ACTION_SHARE = "ACTION_SHARE"
 
-    lateinit var sLoginListener: ILoginListener
-    lateinit var sShareListener: IShareListener
+    var sLoginListener: ILoginListener? = null
+    var sShareListener: IShareListener? = null
 
     fun init(slc: ShareLoginConfig) {
         if (slc.isDebug) {
@@ -59,7 +59,7 @@ object ShareLoginClient {
      * 第三方登录
      * @time 2017/6/6 13:52
      */
-    fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener) {
+    fun login(activity: Activity, @LoginPlatform type: String, loginListener: ILoginListener?) {
         ShareLoginClient.sLoginListener = loginListener
         when (type) {
             WEIBO -> toLogin(activity, SinaHandlerActivity::class.java)
@@ -86,7 +86,7 @@ object ShareLoginClient {
      * 第三方分享
      * @time 2017/6/7 9:51
      */
-    fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener) {
+    fun share(activity: Activity, @SharePlatform sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener?) {
         ShareLoginClient.sShareListener = shareListener
         when (sharePlatform) {
             WEIBO_TIME_LINE -> toShare(activity, sharePlatform, shareContent, SinaHandlerActivity::class.java)

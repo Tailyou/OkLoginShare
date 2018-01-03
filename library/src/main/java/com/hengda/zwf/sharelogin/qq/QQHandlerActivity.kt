@@ -31,13 +31,13 @@ class QQHandlerActivity : Activity() {
         super.onCreate(savedInstanceState)
         if (intent != null && !intent.action.isNullOrBlank()) {
             when (intent.action) {
-                ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener!!)
+                ShareLoginClient.ACTION_LOGIN -> doLogin(ShareLoginClient.sLoginListener)
                 ShareLoginClient.ACTION_SHARE -> {
                     if (intent.hasExtra(ShareLoginClient.SHARE_CONTENT) &&
                             intent.hasExtra(ShareLoginClient.SHARE_PLATFORM)) {
                         val shareContent = intent.extras.get(ShareLoginClient.SHARE_CONTENT) as ShareContent
                         val sharePlatform = intent.extras.getString(ShareLoginClient.SHARE_PLATFORM)
-                        doShare(sharePlatform, shareContent, ShareLoginClient.sShareListener!!)
+                        doShare(sharePlatform, shareContent, ShareLoginClient.sShareListener)
                     }
                 }
                 else -> {
@@ -52,7 +52,7 @@ class QQHandlerActivity : Activity() {
      * @param loginListener
      * @time 2017/6/6 13:46
      */
-    private fun doLogin(loginListener: ILoginListener) {
+    private fun doLogin(loginListener: ILoginListener?) {
         mUIListener = object : IUiListener {
             override fun onComplete(p0: Any?) {
                 try {
@@ -60,18 +60,18 @@ class QQHandlerActivity : Activity() {
                     val token = jsonObject.getString(Constants.PARAM_ACCESS_TOKEN)
                     val openId = jsonObject.getString(Constants.PARAM_OPEN_ID)
                     val expires = jsonObject.getString(Constants.PARAM_EXPIRES_IN)
-                    loginListener.onSuccess(token, openId, java.lang.Long.valueOf(expires)!!)
+                    loginListener?.onSuccess(token, openId, java.lang.Long.valueOf(expires)!!)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
 
             override fun onCancel() {
-                loginListener.onCancel()
+                loginListener?.onCancel()
             }
 
             override fun onError(p0: UiError?) {
-                loginListener.onError(p0?.errorMessage)
+                loginListener?.onError(p0?.errorMessage)
             }
         }
         val tencent = Tencent.createInstance(ShareLoginConfig.qqAppId, this.applicationContext)
@@ -86,18 +86,18 @@ class QQHandlerActivity : Activity() {
      * 分享
      * @time 2017/6/6 14:57
      */
-    private fun doShare(sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener) {
+    private fun doShare(sharePlatform: String, shareContent: ShareContent, shareListener: IShareListener?) {
         mUIListener = object : IUiListener {
             override fun onComplete(p0: Any?) {
-                shareListener.onSuccess()
+                shareListener?.onSuccess()
             }
 
             override fun onCancel() {
-                shareListener.onCancel()
+                shareListener?.onCancel()
             }
 
             override fun onError(p0: UiError?) {
-                shareListener.onError(p0?.errorMessage)
+                shareListener?.onError(p0?.errorMessage)
             }
         }
         val tencent = Tencent.createInstance(ShareLoginConfig.qqAppId, applicationContext)

@@ -74,14 +74,14 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
      * 解析分享响应
      * @time 2017/6/7 14:55
      */
-    private fun parseShareResp(resp: BaseResp, listener: IShareListener) {
+    private fun parseShareResp(resp: BaseResp, listener: IShareListener?) {
         when (resp.errCode) {
-            BaseResp.ErrCode.ERR_OK -> listener.onSuccess()
-            BaseResp.ErrCode.ERR_USER_CANCEL -> listener.onCancel()
-            BaseResp.ErrCode.ERR_AUTH_DENIED -> listener.onError("用户拒绝授权")
-            BaseResp.ErrCode.ERR_SENT_FAILED -> listener.onError("发送失败")
-            BaseResp.ErrCode.ERR_COMM -> listener.onError("一般错误")
-            else -> listener.onError("未知错误")
+            BaseResp.ErrCode.ERR_OK -> listener?.onSuccess()
+            BaseResp.ErrCode.ERR_USER_CANCEL -> listener?.onCancel()
+            BaseResp.ErrCode.ERR_AUTH_DENIED -> listener?.onError("用户拒绝授权")
+            BaseResp.ErrCode.ERR_SENT_FAILED -> listener?.onError("发送失败")
+            BaseResp.ErrCode.ERR_COMM -> listener?.onError("一般错误")
+            else -> listener?.onError("未知错误")
         }
     }
 
@@ -164,18 +164,18 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
      * 解析登录响应
      * @time 2017/6/7 14:51
      */
-    private fun parseLoginResp(activity: Activity, resp: SendAuth.Resp, listener: ILoginListener) {
+    private fun parseLoginResp(activity: Activity, resp: SendAuth.Resp, listener: ILoginListener?) {
         when (resp.errCode) {
             BaseResp.ErrCode.ERR_OK -> getAccessTokenByCode(activity, resp.code, listener)
             BaseResp.ErrCode.ERR_USER_CANCEL -> {
-                listener.onCancel()
+                listener?.onCancel()
                 LogUtil.d(TAG, "取消登录")
             }
             BaseResp.ErrCode.ERR_AUTH_DENIED -> {
-                listener.onError("用户拒绝授权")
+                listener?.onError("用户拒绝授权")
                 LogUtil.d(TAG, "用户拒绝授权")
             }
-            else -> listener.onError("未知错误")
+            else -> listener?.onError("未知错误")
         }
     }
 
@@ -183,7 +183,7 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
      * 根据登录成功后的code获取token
      * @time 2017/6/7 14:50
      */
-    private fun getAccessTokenByCode(context: Context, code: String, listener: ILoginListener) {
+    private fun getAccessTokenByCode(context: Context, code: String, listener: ILoginListener?) {
         val params = WeiboParameters(null)
         params.put("appid", ShareLoginConfig.weiXinAppId)
         params.put("secret", ShareLoginConfig.weiXinSecret)
@@ -197,14 +197,14 @@ class WechatHandlerActivity : Activity(), IWXAPIEventHandler {
                             val token = jsonObject.getString("access_token")
                             val openid = jsonObject.getString("openid")
                             val expires_in = jsonObject.getLong("expires_in")
-                            listener.onSuccess(token, openid, expires_in)
+                            listener?.onSuccess(token, openid, expires_in)
                         } catch (e: JSONException) {
                             e.printStackTrace()
                         }
                     }
 
                     override fun onWeiboException(e: WeiboException) {
-                        listener.onError(e.message!!)
+                        listener?.onError(e.message!!)
                     }
                 })
     }
