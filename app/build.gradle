@@ -4,7 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 26
-    //buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "com.hengda.smart.anyang.m"
         minSdkVersion 18
@@ -47,5 +46,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     //implementation 'com.github.Tailyou:OkLoginShare:1.2'
     implementation 'com.hengda.zwf:CommonUtil:1.0.2'
-    implementation project(':library')
+    //implementation project(':library')
+    compile 'com.hengda.zwf:ShareLogin:0.0.1'
 }

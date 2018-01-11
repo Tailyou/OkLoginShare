@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+/*apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.Tailyou'
+group='com.github.Tailyou'*/
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 15
@@ -35,3 +35,5 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply from: './nexus-push.gradle'
